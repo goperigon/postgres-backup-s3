@@ -16,7 +16,7 @@ jobs:
     strategy:
       matrix:
         stage: [backup, restore]
-        include:
+        configs:
           - { postgres: 11, alpine: "3.10" }
           - { postgres: 12, alpine: "3.12" }
           - { postgres: 13, alpine: "3.14" }
@@ -46,11 +46,11 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ matrix.postgres }}
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ matrix.configs.postgres }}
           build-args: |
-            ALPINE_VERSION=${{ matrix.alpine }}
+            ALPINE_VERSION=${{ matrix.configs.alpine }}
           platforms: |
             linux/amd64
             linux/arm64
-          cache-from: type=gha,scope=${{ matrix.stage }}-${{ matrix.postgres }}
-          cache-to: type=gha,mode=max,scope=${{ matrix.stage }}-${{ matrix.postgres }}
+          cache-from: type=gha,scope=${{ matrix.stage }}-${{ matrix.configs.postgres }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.stage }}-${{ matrix.configs.postgres }}
