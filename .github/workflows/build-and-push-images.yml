@@ -52,5 +52,6 @@ jobs:
           platforms: |
             linux/amd64
             linux/arm64
+          target: ${{ matrix.stage }}
           cache-from: type=gha,scope=${{ matrix.stage }}-${{ matrix.configs.postgres }}
           cache-to: type=gha,mode=max,scope=${{ matrix.stage }}-${{ matrix.configs.postgres }}
