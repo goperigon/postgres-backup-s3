@@ -24,6 +24,8 @@ ENV BACKUP_KEEP_DAYS ''
 
 ADD src/env.sh env.sh
 
+ENTRYPOINT ["/sbin/tini", "--"]
+
 FROM base as backup
 ADD src/run.sh run.sh
 ADD src/backup.sh backup.sh

@@ -9,5 +9,6 @@ fi
 if [ -z "$SCHEDULE" ]; then
   sh backup.sh
 else
-  exec go-cron "$SCHEDULE" /bin/sh backup.sh
+  printf "${SCHEDULE} /bin/sh /backup.sh > /proc/1/fd/1 2> /proc/1/fd/2\n" | crontab -
+  exec crond -f -d 8
 fi
